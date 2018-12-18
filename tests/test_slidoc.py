@@ -5,14 +5,13 @@
 
 import pytest
 
-
-from slidoc import slidoc
+from slidoc import make_slides
 
 
 @pytest.mark.parametrize('bad_targets', ('s5', 123, 'remarkjs'))
 def test_value_error(bad_targets):
     with pytest.raises(ValueError,
-                       match=str(incorrect) +
+                       match=str(bad_targets) +
                        ' is not one of the 3 supported formats.'):
         make_slides(target=bad_targets)
 
@@ -20,7 +19,7 @@ def test_value_error(bad_targets):
 @pytest.mark.parametrize('not_files', ('not a file', 'this either', 'just no'))
 def test_no_file(not_files):
     with pytest.raises(RuntimeError, match='source_file is not a valid path'):
-        make_slides(source_file=not_files)
+        make_slides(source=not_files)
 
 
 @pytest.mark.parametrize('targets', ('slidy', 'dzslides', 'revealjs'))
